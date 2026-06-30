@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Calculadora de IMC</h1>
+    
+    <form id="imcForm">
+        <label for="peso">Peso (kg):</label>
+        <input type="number" id="peso" step="0.01" min="0" placeholder="Ex: 70.5" required>
+        
+        <label for="altura">Altura (metros):</label>
+        <input type="number" id="altura" step="0.01" min="0" placeholder="Ex: 1.75" required>
+        
+        <button type="submit">Calcular IMC</button>
+    </form>
+    
+    <div id="resultado"></div>
+
+    <script>
+        document.getElementById('imcForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
+            const resultado = document.getElementById('resultado');
+            
+            if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+                resultado.innerHTML = `<p style="color: red;">⚠️ Por favor, insira valores válidos.</p>`;
+                return;
+            }
+            
+            const imc = (peso / (altura * altura)).toFixed(2);
+            let classificacao = '';
+            let cor = '';
+            
+            if (imc < 18.5) { classificacao = 'Abaixo do peso'; cor = '#2196F3'; }
+            else if (imc < 25) { classificacao = 'Peso normal'; cor = '#4CAF50'; }
+            else if (imc < 30) { classificacao = 'Sobrepeso'; cor = '#FF9800'; }
+            else if (imc < 35) { classificacao = 'Obesidade grau I'; cor = '#FF5722'; }
+            else if (imc < 40) { classificacao = 'Obesidade grau II'; cor = '#F44336'; }
+            else { classificacao = 'Obesidade grau III'; cor = '#D32F2F'; }
+            
+            resultado.innerHTML = `
+                <div style="background-color: ${cor}; color: white; padding: 20px; border-radius: 8px;">
+                    <strong>Seu IMC é: ${imc}</strong><br><br>
+                    Classificação: <strong>${classificacao}</strong>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
