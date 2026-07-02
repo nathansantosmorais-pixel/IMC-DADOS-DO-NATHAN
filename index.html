@@ -1,373 +1,244 @@
 <!DOCTYPE html>
-<!-- Linha 1: Declaração do tipo de documento HTML5 -->
-
 <html lang="pt-BR">
-<!-- Linha 2: Abre a tag html principal e define o idioma como português brasileiro -->
-
 <head>
-    <!-- Linha 3: Abre a seção head (metadados da página) -->
-
-    <meta charset="UTF-8">
-    <!-- Linha 4: Define a codificação de caracteres como UTF-8 -->
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Linha 5: Configura a viewport para responsividade em dispositivos móveis -->
-
-    <title>Calculadora de IMC | Avaliação Clínica e Esportiva</title>
-    <!-- Linha 6: Define o título que aparece na aba do navegador -->
-
+    <meta charset="UTF-8"> <!-- Define o conjunto de caracteres para suportar acentos e português -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Torna a página responsiva em dispositivos móveis -->
+    <title>Calculadora de IMC - Uso Médico e Treino</title> <!-- Título da página -->
     <style>
-        <!-- Linha 7: Abre a tag style para inserir CSS -->
-
-        * {
-            <!-- Linha 8: Seletor universal CSS -->
-            margin: 0;
-            <!-- Linha 9: Remove margens padrão -->
-            padding: 0;
-            <!-- Linha 10: Remove preenchimentos padrão -->
-            box-sizing: border-box;
-            <!-- Linha 11: Define o modelo de caixa -->
-        }
-        <!-- Linha 12: Fecha o seletor universal -->
-
+        /* Estilos CSS embutidos para uma aparência profissional e clean */
         body {
-            <!-- Linha 13: Estiliza o elemento body -->
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            <!-- Linha 14: Define a fonte principal -->
-            background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
-            <!-- Linha 15: Define o fundo com gradiente -->
-            color: #e2e8f0;
-            <!-- Linha 16: Define a cor do texto -->
-            min-height: 100vh;
-            <!-- Linha 17: Garante altura mínima da tela -->
-            display: flex;
-            <!-- Linha 18: Usa flexbox para centralização -->
-            align-items: center;
-            <!-- Linha 19: Centraliza verticalmente -->
-            justify-content: center;
-            <!-- Linha 20: Centraliza horizontalmente -->
-        }
-        <!-- Linha 21: Fecha o estilo do body -->
-
-        .container {
-            <!-- Linha 22: Estiliza a classe container -->
-            background: #1e2937;
-            <!-- Linha 23: Cor de fundo do cartão -->
-            width: 100%;
-            <!-- Linha 24: Largura 100% com limite máximo -->
-            max-width: 620px;
-            <!-- Linha 25: Largura máxima do cartão -->
-            margin: 20px;
-            <!-- Linha 26: Margem externa -->
-            padding: 40px 35px;
-            <!-- Linha 27: Espaçamento interno -->
-            border-radius: 16px;
-            <!-- Linha 28: Cantos arredondados -->
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            <!-- Linha 29: Sombra do cartão -->
-            border: 1px solid #334155;
-            <!-- Linha 30: Borda sutil -->
-        }
-        <!-- Linha 31: Fecha o estilo do container -->
-
-        h1 {
-            <!-- Linha 32: Estiliza o título h1 -->
-            text-align: center;
-            <!-- Linha 33: Centraliza o texto -->
-            font-size: 2.1rem;
-            <!-- Linha 34: Tamanho da fonte -->
-            margin-bottom: 8px;
-            <!-- Linha 35: Margem inferior -->
-            color: #60a5fa;
-            <!-- Linha 36: Cor azul clara -->
-        }
-        <!-- Linha 37: Fecha o estilo do h1 -->
-
-        .subtitle {
-            <!-- Linha 38: Estiliza a classe subtitle -->
-            text-align: center;
-            <!-- Linha 39: Centraliza o texto -->
-            color: #94a3b8;
-            <!-- Linha 40: Cor cinza claro -->
-            margin-bottom: 35px;
-            <!-- Linha 41: Margem inferior -->
-            font-size: 1.05rem;
-            <!-- Linha 42: Tamanho da fonte -->
-        }
-        <!-- Linha 43: Fecha o estilo do subtitle -->
-
-        .form-group {
-            <!-- Linha 44: Estiliza a classe form-group -->
-            margin-bottom: 22px;
-            <!-- Linha 45: Espaçamento entre campos -->
-        }
-        <!-- Linha 46: Fecha o estilo do form-group -->
-
-        label {
-            <!-- Linha 47: Estiliza as labels -->
-            display: block;
-            <!-- Linha 48: Exibe como bloco -->
-            margin-bottom: 8px;
-            <!-- Linha 49: Margem inferior -->
-            font-weight: 600;
-            <!-- Linha 50: Texto em negrito -->
-            color: #cbd5e1;
-            <!-- Linha 51: Cor do texto -->
-        }
-        <!-- Linha 52: Fecha o estilo das labels -->
-
-        input {
-            <!-- Linha 53: Estiliza os campos input -->
-            width: 100%;
-            <!-- Linha 54: Largura total -->
-            padding: 14px 16px;
-            <!-- Linha 55: Espaçamento interno -->
-            background: #334155;
-            <!-- Linha 56: Cor de fundo -->
-            border: 2px solid #475569;
-            <!-- Linha 57: Borda -->
-            border-radius: 8px;
-            <!-- Linha 58: Cantos arredondados -->
-            color: white;
-            <!-- Linha 59: Cor do texto -->
-            font-size: 1.1rem;
-            <!-- Linha 60: Tamanho da fonte -->
-            transition: all 0.3s;
-            <!-- Linha 61: Transição suave -->
-        }
-        <!-- Linha 62: Fecha o estilo dos inputs -->
-
-        input:focus {
-            <!-- Linha 63: Estilo quando o input está focado -->
-            border-color: #60a5fa;
-            <!-- Linha 64: Muda cor da borda -->
-            outline: none;
-            <!-- Linha 65: Remove outline padrão -->
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
-            <!-- Linha 66: Adiciona sombra de foco -->
-        }
-        <!-- Linha 67: Fecha o estilo input:focus -->
-
-        button {
-            <!-- Linha 68: Estiliza o botão -->
-            width: 100%;
-            <!-- Linha 69: Largura total -->
-            padding: 16px;
-            <!-- Linha 70: Espaçamento interno -->
-            margin: 30px 0 20px 0;
-            <!-- Linha 71: Margens externas -->
-            background: #3b82f6;
-            <!-- Linha 72: Cor de fundo azul -->
-            color: white;
-            <!-- Linha 73: Cor do texto -->
-            font-size: 1.2rem;
-            <!-- Linha 74: Tamanho da fonte -->
-            font-weight: 700;
-            <!-- Linha 75: Negrito -->
-            border: none;
-            <!-- Linha 76: Sem borda -->
-            border-radius: 8px;
-            <!-- Linha 77: Cantos arredondados -->
-            cursor: pointer;
-            <!-- Linha 78: Cursor de mão -->
-            transition: background 0.3s;
-            <!-- Linha 79: Transição suave -->
-        }
-        <!-- Linha 80: Fecha o estilo do botão -->
-
-        button:hover {
-            <!-- Linha 81: Estilo quando mouse está sobre o botão -->
-            background: #2563eb;
-            <!-- Linha 82: Cor mais escura no hover -->
-        }
-        <!-- Linha 83: Fecha o estilo button:hover -->
-
-        #resultado {
-            <!-- Linha 84: Estiliza a div de resultado -->
-            margin-top: 25px;
-            <!-- Linha 85: Margem superior -->
-            padding: 25px;
-            <!-- Linha 86: Espaçamento interno -->
-            border-radius: 12px;
-            <!-- Linha 87: Cantos arredondados -->
-            text-align: center;
-            <!-- Linha 88: Centraliza o texto -->
-            min-height: 160px;
-            <!-- Linha 89: Altura mínima -->
-            font-size: 1.15rem;
-            <!-- Linha 90: Tamanho da fonte -->
-            line-height: 1.6;
-            <!-- Linha 91: Espaçamento entre linhas -->
-        }
-        <!-- Linha 92: Fecha o estilo do resultado -->
-
-        .atencao {
-            <!-- Linha 93: Estiliza a caixa de atenção -->
-            background: #334155;
-            <!-- Linha 94: Cor de fundo -->
-            border-left: 5px solid #eab308;
-            <!-- Linha 95: Borda esquerda amarela -->
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
             padding: 20px;
-            <!-- Linha 96: Espaçamento interno -->
-            margin-top: 30px;
-            <!-- Linha 97: Margem superior -->
-            border-radius: 8px;
-            <!-- Linha 98: Cantos arredondados -->
-            font-size: 0.97rem;
-            <!-- Linha 99: Tamanho da fonte -->
-            color: #e2e8f0;
-            <!-- Linha 100: Cor do texto -->
+            color: #333;
         }
-        <!-- Linha 101: Fecha o estilo da atenção -->
-
-        /* Linha 102: Fecha o bloco completo de CSS */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        #resultado {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.3em;
+            display: none;
+        }
+        .imc-normal { background: #2ecc71; color: white; }
+        .imc-baixo { background: #f1c40f; color: white; }
+        .imc-alto { background: #e67e22; color: white; }
+        .imc-obeso { background: #e74c3c; color: white; }
+        
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #34495e;
+            color: white;
+        }
+        .nota {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 30px;
+            line-height: 1.5;
+        }
     </style>
-    <!-- Linha 103: Fecha a tag style -->
-
 </head>
-<!-- Linha 104: Fecha a seção head -->
-
 <body>
-    <!-- Linha 105: Abre o corpo da página -->
-
     <div class="container">
-        <!-- Linha 106: Abre o container principal -->
-
+        <!-- Cabeçalho da calculadora -->
         <h1>Calculadora de IMC</h1>
-        <!-- Linha 107: Título principal -->
-
-        <p class="subtitle">Avaliação Clínica e para Praticantes de Atividade Física</p>
-        <!-- Linha 108: Subtítulo da página -->
-
+        <p class="subtitle">Para fins médicos e praticantes de treinamento físico</p>
+        
+        <!-- Formulário de entrada -->
         <div class="form-group">
-            <!-- Linha 109: Abre grupo do campo peso -->
-
-            <label for="peso">Peso corporal (kg)</label>
-            <!-- Linha 110: Label do peso -->
-
-            <input type="number" id="peso" step="0.1" placeholder="Exemplo: 78.5">
-            <!-- Linha 111: Campo de entrada do peso -->
-
+            <label for="peso">Peso (kg):</label>
+            <input type="number" id="peso" step="0.1" min="20" placeholder="Ex: 75.5" required>
         </div>
-        <!-- Linha 112: Fecha grupo do peso -->
-
+        
         <div class="form-group">
-            <!-- Linha 113: Abre grupo do campo altura -->
-
-            <label for="altura">Altura (metros)</label>
-            <!-- Linha 114: Label da altura -->
-
-            <input type="number" id="altura" step="0.01" placeholder="Exemplo: 1.78">
-            <!-- Linha 115: Campo de entrada da altura -->
-
+            <label for="altura">Altura (cm):</label>
+            <input type="number" id="altura" step="0.1" min="100" placeholder="Ex: 175" required>
         </div>
-        <!-- Linha 116: Fecha grupo da altura -->
-
+        
+        <!-- Botão de cálculo -->
         <button onclick="calcularIMC()">Calcular IMC</button>
-        <!-- Linha 117: Botão de calcular -->
-
+        
+        <!-- Área onde o resultado será exibido -->
         <div id="resultado"></div>
-        <!-- Linha 118: Div onde aparece o resultado -->
-
-        <div class="atencao">
-            <!-- Linha 119: Abre caixa de atenção -->
-
-            <strong>⚠️ Importante para Atletas e Treino de Força:</strong><br><br>
-            <!-- Linha 120: Título da atenção -->
-
-            O IMC é uma ferramenta de triagem e não substitui uma avaliação completa.<br>
-            <!-- Linha 121: Texto 1 da atenção -->
-
-            Indivíduos com alta massa muscular podem apresentar IMC elevado mesmo com baixa gordura corporal.
-            <!-- Linha 122: Texto 2 da atenção -->
-
+        
+        <!-- Tabela de classificação do IMC -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Classificação</th>
+                    <th>IMC</th>
+                    <th>Interpretação para Treino/Saúde</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Abaixo do peso</td>
+                    <td>&lt; 18,5</td>
+                    <td>Pode indicar necessidade de ganho de massa muscular.</td>
+                </tr>
+                <tr>
+                    <td>Peso normal</td>
+                    <td>18,5 – 24,9</td>
+                    <td>Faixa ideal para a maioria das pessoas.</td>
+                </tr>
+                <tr>
+                    <td>Sobrepeso</td>
+                    <td>25,0 – 29,9</td>
+                    <td>Atenção à composição corporal (músculo × gordura).</td>
+                </tr>
+                <tr>
+                    <td>Obesidade grau I</td>
+                    <td>30,0 – 34,9</td>
+                    <td>Risco aumentado. Recomenda-se acompanhamento.</td>
+                </tr>
+                <tr>
+                    <td>Obesidade grau II</td>
+                    <td>35,0 – 39,9</td>
+                    <td>Risco alto. Avaliação médica recomendada.</td>
+                </tr>
+                <tr>
+                    <td>Obesidade grau III</td>
+                    <td>≥ 40,0</td>
+                    <td>Risco muito alto. Consulte um profissional.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="nota">
+            <strong>Importante:</strong> O IMC não diferencia massa muscular de gordura corporal. 
+            Atletas e pessoas que treinam força frequentemente apresentam IMC mais alto por causa do músculo. 
+            Use esta ferramenta como referência inicial. Consulte sempre um médico ou nutricionista para avaliação completa.
         </div>
-        <!-- Linha 123: Fecha caixa de atenção -->
-
     </div>
-    <!-- Linha 124: Fecha o container principal -->
 
     <script>
-        <!-- Linha 125: Abre a tag script -->
-
-        // Linha 126: Função principal de cálculo do IMC
+        // Função principal que calcula o IMC
         function calcularIMC() {
-            
-            // Linha 127: Captura valor do peso
+            // Pega os valores dos campos de entrada
             const peso = parseFloat(document.getElementById('peso').value);
+            const alturaCm = parseFloat(document.getElementById('altura').value);
             
-            // Linha 128: Captura valor da altura
-            const altura = parseFloat(document.getElementById('altura').value);
-            
-            // Linha 129: Seleciona div de resultado
-            const resultadoDiv = document.getElementById('resultado');
-
-            // Linha 130: Validação dos campos
-            if (!peso || !altura || altura <= 0 || peso <= 0) {
-                resultadoDiv.style.backgroundColor = '#991b1b';
-                resultadoDiv.style.color = 'white';
-                resultadoDiv.innerHTML = `
-                    <strong>Erro:</strong> Por favor, preencha todos os campos com valores válidos.
-                `;
+            // Validação básica dos campos
+            if (!peso || !alturaCm || peso <= 0 || alturaCm <= 0) {
+                alert("Por favor, preencha peso e altura corretamente.");
                 return;
             }
-
-            // Linha 131: Cálculo do IMC
+            
+            // Converte altura de cm para metros
+            const altura = alturaCm / 100;
+            
+            // Calcula o IMC (fórmula: peso / altura²)
             const imc = (peso / (altura * altura)).toFixed(2);
-
-            // Linha 132: Declara variáveis de resultado
-            let categoria = "";
-            let cor = "";
-            let mensagem = "";
-
-            // Linha 133: Classificação - Baixo peso
+            
+            // Pega o elemento onde o resultado será mostrado
+            const resultadoDiv = document.getElementById('resultado');
+            
+            let classificacao = '';
+            let classeCSS = '';
+            
+            // Determina a classificação e a cor conforme o valor do IMC
             if (imc < 18.5) {
-                categoria = "Baixo Peso";
-                cor = "#67e8f9";
-                mensagem = "Seu peso está abaixo do recomendado. Recomenda-se avaliação nutricional.";
-            } 
-            // Linha 134: Classificação - Peso Normal
-            else if (imc >= 18.5 && imc < 25) {
-                categoria = "Peso Normal";
-                cor = "#4ade80";
-                mensagem = "Parabéns! Seu IMC está dentro da faixa considerada saudável.";
-            } 
-            // Linha 135: Classificação - Sobrepeso
-            else if (imc >= 25 && imc < 30) {
-                categoria = "Sobrepeso";
-                cor = "#fbbf24";
-                mensagem = "Atenção: recomenda-se acompanhamento para prevenção de riscos.";
-            } 
-            // Linha 136: Classificação - Obesidade
-            else {
-                categoria = "Obesidade";
-                cor = "#f87171";
-                mensagem = "É recomendada consulta médica e avaliação nutricional completa.";
+                classificacao = 'Abaixo do peso';
+                classeCSS = 'imc-baixo';
+            } else if (imc < 25) {
+                classificacao = 'Peso normal';
+                classeCSS = 'imc-normal';
+            } else if (imc < 30) {
+                classificacao = 'Sobrepeso';
+                classeCSS = 'imc-alto';
+            } else if (imc < 35) {
+                classificacao = 'Obesidade grau I';
+                classeCSS = 'imc-obeso';
+            } else if (imc < 40) {
+                classificacao = 'Obesidade grau II';
+                classeCSS = 'imc-obeso';
+            } else {
+                classificacao = 'Obesidade grau III';
+                classeCSS = 'imc-obeso';
             }
-
-            // Linha 137: Exibe resultado formatado
-            resultadoDiv.style.backgroundColor = '#1e2937';
-            resultadoDiv.style.border = `3px solid ${cor}`;
+            
+            // Monta o HTML do resultado com o valor calculado
             resultadoDiv.innerHTML = `
-                <h2 style="color: ${cor}; margin-bottom: 12px;">IMC: ${imc}</h2>
-                <h3 style="color: ${cor};">${categoria}</h3>
-                <p style="margin-top: 18px;">${mensagem}</p>
+                <h2>Seu IMC: <strong>${imc}</strong></h2>
+                <p><strong>Classificação:</strong> ${classificacao}</p>
+                <p><em>Para atletas e praticantes de musculação: lembre-se que o IMC não considera a composição corporal.</em></p>
             `;
+            
+            // Aplica a cor correspondente
+            resultadoDiv.className = `imc-resultado ${classeCSS}`;
+            resultadoDiv.style.display = 'block';
         }
-
-        // Linha 138: Evento de teclado (Enter)
-        document.addEventListener('keypress', function(e) {
+        
+        // Permite calcular apertando Enter no último campo
+        document.getElementById('altura').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 calcularIMC();
             }
         });
-
-        // Linha 139: Fecha o script
     </script>
-    <!-- Linha 140: Fecha a tag script -->
-
 </body>
-<!-- Linha 141: Fecha a tag body -->
-
 </html>
-<!-- Linha 142: Fecha a tag html -->
