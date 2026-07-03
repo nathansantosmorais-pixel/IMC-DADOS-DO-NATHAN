@@ -1,165 +1,207 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
+<!DOCTYPE html> <!-- Declaração do tipo de documento HTML5 -->
+
+<html lang="pt-BR"> <!-- Tag raiz do documento HTML com idioma português brasileiro -->
+
+<head> <!-- Início da seção HEAD (metadados e configurações) -->
+
+    <!-- Define o conjunto de caracteres para suportar acentos e letras portuguesas -->
     <meta charset="UTF-8">
+    
+    <!-- Configuração para responsividade em celulares e tablets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMC Pro - Calculadora Clínica</title>
-    <style>
+    
+    <!-- Título que aparece na aba do navegador -->
+    <title>Calculadora de IMC</title>
+    
+    <style> /* Início da seção de CSS embutido */
+
+        /* Importa a fonte Inter do Google Fonts para visual profissional */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+        /* Estilos aplicados ao elemento <body> */
         body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
-            margin: 0;
-            padding: 20px;
-            color: #e2e8f0;
-            line-height: 1.6;
+            font-family: 'Inter', system-ui, sans-serif; /* Define a fonte principal da página */
+            background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); /* Gradiente de fundo escuro azul */
+            margin: 0; /* Remove margens padrão do navegador */
+            padding: 20px; /* Adiciona espaçamento ao redor do conteúdo */
+            color: #e2e8f0; /* Cor padrão do texto */
+            line-height: 1.6; /* Define espaçamento entre linhas de texto */
         }
+
+        /* Container principal que centraliza todo o conteúdo */
         .container {
-            max-width: 700px;
-            margin: 40px auto;
-            background: #1e2937;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            border: 1px solid #334155;
+            max-width: 700px; /* Largura máxima do card */
+            margin: 40px auto; /* Centraliza horizontalmente com margem superior */
+            background: #1e2937; /* Cor de fundo do container */
+            padding: 40px; /* Espaçamento interno generoso */
+            border-radius: 20px; /* Arredonda os cantos */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); /* Sombra para efeito 3D */
+            border: 1px solid #334155; /* Borda sutil clara */
         }
+
+        /* Estilos do cabeçalho da calculadora */
         .header {
-            text-align: center;
-            margin-bottom: 35px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 25px;
+            text-align: center; /* Centraliza o conteúdo do header */
+            margin-bottom: 35px; /* Espaço abaixo do header */
+            border-bottom: 1px solid #334155; /* Linha divisória fina */
+            padding-bottom: 25px; /* Espaçamento interno inferior */
         }
-        h1 {
-            color: #60a5fa;
-            margin: 0 0 8px 0;
-            font-size: 2.2em;
-            font-weight: 700;
+
+        h1 { /* Título principal H1 */
+            color: #60a5fa; /* Cor azul clara */
+            margin: 0 0 8px 0; /* Margens ajustadas */
+            font-size: 2.2em; /* Tamanho grande do título */
+            font-weight: 700; /* Texto bem destacado */
         }
-        .subtitle {
-            color: #94a3b8;
-            font-size: 1.1em;
-            margin: 0;
+
+        .subtitle { /* Subtítulo abaixo do título */
+            color: #94a3b8; /* Cor cinza claro */
+            font-size: 1.1em; /* Tamanho médio */
+            margin: 0; /* Remove margens padrão */
         }
+
+        /* Cada grupo de label + input */
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 24px; /* Espaçamento entre os campos do formulário */
         }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #cbd5e1;
-            font-size: 0.95em;
+
+        label { /* Rótulos dos campos */
+            display: block; /* Faz o label ocupar linha completa */
+            margin-bottom: 8px; /* Espaço entre label e input */
+            font-weight: 600; /* Texto em negrito */
+            color: #cbd5e1; /* Cor do texto do label */
+            font-size: 0.95em; /* Tamanho ligeiramente menor */
         }
+
+        /* Estilos comuns para campos de entrada */
         input, select {
-            width: 100%;
-            padding: 14px 16px;
-            background: #334155;
-            border: 2px solid #475569;
-            border-radius: 10px;
-            font-size: 16px;
-            color: #e2e8f0;
-            transition: all 0.3s;
+            width: 100%; /* Ocupa 100% da largura disponível */
+            padding: 14px 16px; /* Espaçamento interno */
+            background: #334155; /* Fundo escuro dos inputs */
+            border: 2px solid #475569; /* Borda padrão */
+            border-radius: 10px; /* Cantos arredondados */
+            font-size: 16px; /* Tamanho da fonte digitada */
+            color: #e2e8f0; /* Cor do texto dentro do campo */
+            transition: all 0.3s; /* Transição suave para efeitos */
         }
+
+        /* Efeito quando o usuário clica no campo */
         input:focus, select:focus {
-            outline: none;
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+            outline: none; /* Remove contorno azul padrão do navegador */
+            border-color: #60a5fa; /* Muda cor da borda para azul */
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15); /* Brilho ao redor */
         }
+
+        /* Estilos do botão "Calcular IMC" */
         button {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 10px;
+            width: 100%; /* Botão ocupa toda a largura */
+            padding: 16px; /* Espaçamento interno */
+            background: linear-gradient(135deg, #3b82f6, #2563eb); /* Gradiente azul */
+            color: white; /* Texto branco */
+            border: none; /* Remove borda padrão */
+            border-radius: 10px; /* Cantos arredondados */
+            font-size: 18px; /* Tamanho da fonte */
+            font-weight: 600; /* Negrito */
+            cursor: pointer; /* Cursor de mão */
+            transition: all 0.3s; /* Transição suave */
+            margin-top: 10px; /* Espaço acima do botão */
         }
+
+        /* Efeito quando o mouse passa sobre o botão */
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            transform: translateY(-3px); /* Levanta o botão levemente */
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3); /* Sombra maior */
         }
+
+        /* Div que recebe o resultado do cálculo */
         #resultado {
-            margin: 35px 0;
-            padding: 30px;
-            border-radius: 16px;
-            display: none;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 35px 0; /* Margens superior e inferior */
+            padding: 30px; /* Espaçamento interno */
+            border-radius: 16px; /* Cantos arredondados */
+            display: none; /* Começa escondida */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Sombra */
         }
+
+        /* Classes de cores para cada tipo de resultado */
         .imc-normal { background: #166534; border: 1px solid #4ade80; }
         .imc-baixo { background: #854d0e; border: 1px solid #facc15; }
         .imc-alto { background: #9a3412; border: 1px solid #fb923c; }
         .imc-obeso { background: #7f1d1d; border: 1px solid #f87171; }
 
+        /* Estilos da tabela de referência */
         table {
-            width: 100%;
-            margin: 35px 0;
-            border-collapse: collapse;
-            background: #1e2937;
-        }
-        th, td {
-            padding: 16px;
-            text-align: left;
-            border-bottom: 1px solid #334155;
-        }
-        th {
-            background: #1e40af;
-            color: white;
-            font-weight: 600;
+            width: 100%; /* Largura total */
+            margin: 35px 0; /* Espaçamento vertical */
+            border-collapse: collapse; /* Une as bordas das células */
+            background: #1e2937; /* Cor de fundo da tabela */
         }
 
+        th, td { /* Células de cabeçalho e corpo */
+            padding: 16px; /* Espaçamento interno */
+            text-align: left; /* Alinhado à esquerda */
+            border-bottom: 1px solid #334155; /* Linha separadora */
+        }
+
+        th { /* Cabeçalho da tabela */
+            background: #1e40af; /* Fundo azul escuro */
+            color: white; /* Texto branco */
+            font-weight: 600; /* Negrito */
+        }
+
+        /* Seção de dicas que aparece após calcular */
         .dicas {
-            margin-top: 40px;
-            background: #334155;
-            padding: 28px;
-            border-radius: 16px;
-            border-left: 6px solid #60a5fa;
-            display: none;
-        }
-        .dicas h3 {
-            color: #60a5fa;
-            margin-top: 0;
-            font-size: 1.4em;
+            margin-top: 40px; /* Espaço acima */
+            background: #334155; /* Fundo escuro */
+            padding: 28px; /* Espaçamento interno */
+            border-radius: 16px; /* Cantos arredondados */
+            border-left: 6px solid #60a5fa; /* Barra lateral azul */
+            display: none; /* Escondida até o cálculo */
         }
 
+        .dicas h3 { /* Título dentro das dicas */
+            color: #60a5fa; /* Cor azul */
+            margin-top: 0; /* Remove margem superior */
+            font-size: 1.4em; /* Tamanho do título */
+        }
+
+        /* Aviso no rodapé da página */
         .nota {
-            font-size: 0.92em;
-            color: #94a3b8;
-            margin-top: 35px;
-            padding: 20px;
-            background: #0f172a;
-            border-radius: 12px;
+            font-size: 0.92em; /* Texto menor */
+            color: #94a3b8; /* Cor cinza suave */
+            margin-top: 35px; /* Espaço acima */
+            padding: 20px; /* Espaçamento interno */
+            background: #0f172a; /* Fundo mais escuro */
+            border-radius: 12px; /* Cantos arredondados */
         }
-        .result-title {
-            font-size: 1.1em;
-            color: #94a3b8;
-            margin-bottom: 8px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
+    </style> <!-- Fim da seção de estilos CSS -->
+
+</head> <!-- Fim da seção HEAD -->
+
+<body> <!-- Início do corpo visível da página -->
+
+    <div class="container"> <!-- Div principal que agrupa todo o conteúdo -->
+        
+        <!-- Cabeçalho da calculadora -->
         <div class="header">
-            <h1>IMC Pro</h1>
-            <p class="subtitle">Calculadora Clínica para Avaliação Médica e Desempenho Físico</p>
+            <h1>Calculadora de IMC</h1> <!-- Título principal -->
+            <p class="subtitle">Ferramenta para Avaliação Médica e Treinamento Físico</p> <!-- Descrição -->
         </div>
         
+        <!-- Campo de Nome -->
         <div class="form-group">
             <label for="nome">Nome Completo</label>
             <input type="text" id="nome" placeholder="Ex: João Silva" required>
         </div>
 
+        <!-- Campo de Idade -->
         <div class="form-group">
-            <label for="idade">Idade</label>
+            <label for="idade">Idade (anos)</label>
             <input type="number" id="idade" min="10" max="120" placeholder="Ex: 32" required>
         </div>
 
+        <!-- Campo de Sexo -->
         <div class="form-group">
-            <label for="sexo">Sexo Biológico</label>
+            <label for="sexo">Sexo</label>
             <select id="sexo" required>
                 <option value="">Selecione</option>
                 <option value="Masculino">Masculino</option>
@@ -168,20 +210,25 @@
             </select>
         </div>
 
+        <!-- Campo de Peso -->
         <div class="form-group">
-            <label for="peso">Peso Corporal (kg)</label>
+            <label for="peso">Peso (kg)</label>
             <input type="number" id="peso" step="0.1" min="20" placeholder="Ex: 78.5" required>
         </div>
         
+        <!-- Campo de Altura -->
         <div class="form-group">
             <label for="altura">Altura (metros)</label>
             <input type="number" id="altura" step="0.01" min="1.0" placeholder="Ex: 1.78" required>
         </div>
         
+        <!-- Botão que aciona o cálculo -->
         <button onclick="calcularIMC()">Calcular IMC</button>
         
+        <!-- Área destinada a mostrar o resultado -->
         <div id="resultado"></div>
 
+        <!-- Tabela de classificação -->
         <table>
             <thead>
                 <tr>
@@ -200,43 +247,63 @@
             </tbody>
         </table>
 
+        <!-- Seção de dicas (aparece após o cálculo) -->
         <div class="dicas" id="dicas">
             <h3>Recomendações Clínicas e para Treinamento</h3>
             <ul>
                 <li><strong>Praticantes de musculação:</strong> O IMC frequentemente superestima a gordura corporal em indivíduos com alta massa muscular.</li>
                 <li><strong>Avaliação complementar:</strong> Use circunferência da cintura, bioimpedância ou DEXA para maior precisão.</li>
-                <li><strong>Perda de peso:</strong> Déficit calórico controlado + treinamento resistido para preservar massa magra.</li>
-                <li><strong>Ganho muscular:</strong> Ingestão proteica de 1,6 a 2,2g/kg/dia associada a treinamento de força.</li>
-                <li><strong>Populações especiais:</strong> Idosos e atletas podem necessitar de interpretação individualizada do IMC.</li>
+                <li><strong>Perda de peso:</strong> Déficit calórico controlado + treinamento resistido.</li>
+                <li><strong>Ganho muscular:</strong> 1,6 a 2,2g de proteína por kg de peso corporal.</li>
             </ul>
         </div>
 
+        <!-- Aviso final -->
         <div class="nota">
-            <strong>⚠️ Aviso Médico:</strong> Esta ferramenta é destinada apenas a fins educacionais e de triagem. 
-            O IMC não substitui uma consulta médica ou avaliação nutricional completa.
+            <strong>⚠️ Aviso:</strong> Esta ferramenta é apenas para triagem inicial. 
+            Consulte um médico ou nutricionista para avaliação completa.
         </div>
-    </div>
+    </div> <!-- Fim do container principal -->
 
-    <script>
+    <script> <!-- Início do JavaScript -->
+
+        // Função principal que executa todo o cálculo
         function calcularIMC() {
+            
+            // Obtém o nome e remove espaços em branco no início e fim
             const nome = document.getElementById('nome').value.trim();
+            
+            // Converte o valor da idade para número inteiro
             const idade = parseInt(document.getElementById('idade').value);
+            
+            // Obtém o valor selecionado no campo sexo
             const sexo = document.getElementById('sexo').value;
+            
+            // Converte o peso para número decimal
             const peso = parseFloat(document.getElementById('peso').value);
+            
+            // Converte a altura para número decimal
             const altura = parseFloat(document.getElementById('altura').value);
             
+            // Validação completa dos campos
             if (!nome || !idade || !sexo || !peso || !altura || peso <= 0 || altura <= 0) {
                 alert("Por favor, preencha todos os campos corretamente.");
-                return;
+                return; /* Sai da função se houver erro */
             }
             
+            /* Calcula o IMC com duas casas decimais */
             const imc = (peso / (altura * altura)).toFixed(2);
+            
+            /* Seleciona a div do resultado */
             const resultadoDiv = document.getElementById('resultado');
+            
+            /* Seleciona a div das dicas */
             const dicasDiv = document.getElementById('dicas');
             
-            let classificacao = '';
-            let classeCSS = '';
+            let classificacao = ''; /* Variável vazia para classificação */
+            let classeCSS = '';     /* Variável vazia para classe de estilo */
             
+            /* Define classificação e cor conforme valor do IMC */
             if (imc < 18.5) {
                 classificacao = 'Abaixo do peso';
                 classeCSS = 'imc-baixo';
@@ -257,22 +324,30 @@
                 classeCSS = 'imc-obeso';
             }
             
+            /* Monta o conteúdo HTML do resultado */
             resultadoDiv.innerHTML = `
                 <h2 class="result-title">Resultado da Avaliação</h2>
                 <h3>${nome} • ${idade} anos • ${sexo}</h3>
                 <h1 style="font-size: 3em; margin: 15px 0;">${imc}</h1>
                 <p style="font-size: 1.4em; margin: 10px 0;"><strong>${classificacao}</strong></p>
-                <p style="color: #cbd5e1;">O IMC é uma ferramenta de triagem inicial. Recomenda-se avaliação da composição corporal para maior precisão.</p>
+                <p style="color: #cbd5e1;">O IMC é uma ferramenta de triagem inicial.</p>
             `;
             
+            /* Aplica classe de cor e exibe o resultado */
             resultadoDiv.className = `imc-resultado ${classeCSS}`;
             resultadoDiv.style.display = 'block';
+            
+            /* Exibe as dicas após o cálculo */
             dicasDiv.style.display = 'block';
         }
 
+        /* Evento que permite calcular pressionando a tecla Enter */
         document.getElementById('altura').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') calcularIMC();
         });
-    </script>
-</body>
-</html>
+
+    </script> <!-- Fim da seção JavaScript -->
+
+</body> <!-- Fim do corpo da página -->
+
+</html> <!-- Fim completo do documento HTML -->
