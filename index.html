@@ -104,6 +104,7 @@
             padding: 25px;
             border-radius: 12px;
             border-left: 5px solid #60a5fa;
+            display: none; /* Inicialmente escondido */
         }
         .dicas h3 {
             color: #60a5fa;
@@ -156,7 +157,7 @@
         
         <div id="resultado"></div>
 
-        <!-- Tabela -->
+        <!-- Tabela de classificação -->
         <table>
             <thead>
                 <tr>
@@ -175,16 +176,16 @@
             </tbody>
         </table>
 
-        <!-- Dicas Médicas e para Treino -->
-        <div class="dicas">
+        <!-- Dicas (aparece só após o cálculo) -->
+        <div class="dicas" id="dicas">
             <h3>💡 Dicas Médicas e para Quem Treina</h3>
             <ul>
-                <li><strong>Atletas e praticantes de musculação:</strong> O IMC pode superestimar sua gordura corporal devido ao alto volume muscular. Prefira usar <strong>circunferência abdominal</strong>, <strong>dobras cutâneas</strong> ou <strong>DEXA</strong>.</li>
+                <li><strong>Atletas e praticantes de musculação:</strong> O IMC pode superestimar sua gordura corporal devido ao alto volume muscular. Prefira usar circunferência abdominal, dobras cutâneas ou DEXA.</li>
                 <li><strong>Idosos:</strong> Um IMC ligeiramente acima de 25 pode ser protetor contra osteoporose e fragilidade.</li>
-                <li><strong>Mulheres:</strong> Tendem a ter naturalmente mais gordura corporal que homens. Foque mais na composição do que apenas no número do IMC.</li>
-                <li><strong>Perda de peso:</strong> Priorize déficit calórico moderado (300-500 kcal) + treino de força para preservar músculo.</li>
-                <li><strong>Ganho de massa:</strong> Consuma proteína entre 1,6–2,2g por kg de peso corporal e esteja em superávit calórico.</li>
-                <li><strong>Consulte sempre:</strong> Um nutricionista ou endocrinologista para avaliação completa (bioimpedância, exames hormonais, etc.).</li>
+                <li><strong>Mulheres:</strong> Tendem a ter naturalmente mais gordura corporal que homens. Foque mais na composição do que apenas no número.</li>
+                <li><strong>Perda de peso saudável:</strong> Déficit calórico moderado (300-500 kcal) + treino de força.</li>
+                <li><strong>Ganho de massa muscular:</strong> 1,6–2,2g de proteína por kg de peso + superávit calórico.</li>
+                <li><strong>Recomendação:</strong> Consulte um nutricionista ou médico para avaliação completa.</li>
             </ul>
         </div>
 
@@ -208,6 +209,7 @@
             
             const imc = (peso / (altura * altura)).toFixed(2);
             const resultadoDiv = document.getElementById('resultado');
+            const dicasDiv = document.getElementById('dicas');
             
             let classificacao = '';
             let classeCSS = '';
@@ -242,6 +244,9 @@
             
             resultadoDiv.className = `imc-resultado ${classeCSS}`;
             resultadoDiv.style.display = 'block';
+            
+            // Mostra as dicas após o cálculo
+            dicasDiv.style.display = 'block';
         }
 
         // Enter para calcular
