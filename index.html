@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8"> <!-- Define o conjunto de caracteres para suportar acentos e português -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Torna a página responsiva em dispositivos móveis -->
-    <title>Calculadora de IMC - Uso Médico e Treino</title> <!-- Título da página -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC - Uso Médico e Treino</title>
     <style>
-        /* Estilos CSS embutidos para uma aparência profissional e clean */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -51,6 +50,13 @@
         input:focus {
             outline: none;
             border-color: #3498db;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
         }
         button {
             width: 100%;
@@ -104,11 +110,31 @@
 </head>
 <body>
     <div class="container">
-        <!-- Cabeçalho da calculadora -->
         <h1>Calculadora de IMC</h1>
         <p class="subtitle">Para fins médicos e praticantes de treinamento físico</p>
         
-        <!-- Formulário de entrada -->
+        <!-- Novos campos -->
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" placeholder="Ex: João Silva" required>
+        </div>
+
+        <div class="form-group">
+            <label for="idade">Idade (anos):</label>
+            <input type="number" id="idade" min="10" max="120" placeholder="Ex: 28" required>
+        </div>
+
+        <div class="form-group">
+            <label>Sexo:</label>
+            <select id="sexo" required>
+                <option value="">Selecione</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+
+        <!-- Campos originais -->
         <div class="form-group">
             <label for="peso">Peso (kg):</label>
             <input type="number" id="peso" step="0.1" min="20" placeholder="Ex: 75.5" required>
@@ -119,13 +145,11 @@
             <input type="number" id="altura" step="0.1" min="100" placeholder="Ex: 175" required>
         </div>
         
-        <!-- Botão de cálculo -->
         <button onclick="calcularIMC()">Calcular IMC</button>
         
-        <!-- Área onde o resultado será exibido -->
         <div id="resultado"></div>
         
-        <!-- Tabela de classificação do IMC -->
+        <!-- Tabela de classificação -->
         <table>
             <thead>
                 <tr>
@@ -176,31 +200,26 @@
     </div>
 
     <script>
-        // Função principal que calcula o IMC
         function calcularIMC() {
-            // Pega os valores dos campos de entrada
+            const nome = document.getElementById('nome').value.trim();
+            const idade = parseInt(document.getElementById('idade').value);
+            const sexo = document.getElementById('sexo').value;
             const peso = parseFloat(document.getElementById('peso').value);
             const alturaCm = parseFloat(document.getElementById('altura').value);
             
-            // Validação básica dos campos
-            if (!peso || !alturaCm || peso <= 0 || alturaCm <= 0) {
-                alert("Por favor, preencha peso e altura corretamente.");
+            if (!nome || !idade || !sexo || !peso || !alturaCm || peso <= 0 || alturaCm <= 0) {
+                alert("Por favor, preencha todos os campos corretamente.");
                 return;
             }
             
-            // Converte altura de cm para metros
             const altura = alturaCm / 100;
-            
-            // Calcula o IMC (fórmula: peso / altura²)
             const imc = (peso / (altura * altura)).toFixed(2);
             
-            // Pega o elemento onde o resultado será mostrado
             const resultadoDiv = document.getElementById('resultado');
             
             let classificacao = '';
             let classeCSS = '';
             
-            // Determina a classificação e a cor conforme o valor do IMC
             if (imc < 18.5) {
                 classificacao = 'Abaixo do peso';
                 classeCSS = 'imc-baixo';
@@ -221,19 +240,19 @@
                 classeCSS = 'imc-obeso';
             }
             
-            // Monta o HTML do resultado com o valor calculado
             resultadoDiv.innerHTML = `
+                <h2>Resultado de ${nome}</h2>
+                <p><strong>Idade:</strong> ${idade} anos | <strong>Sexo:</strong> ${sexo}</p>
                 <h2>Seu IMC: <strong>${imc}</strong></h2>
                 <p><strong>Classificação:</strong> ${classificacao}</p>
                 <p><em>Para atletas e praticantes de musculação: lembre-se que o IMC não considera a composição corporal.</em></p>
             `;
             
-            // Aplica a cor correspondente
             resultadoDiv.className = `imc-resultado ${classeCSS}`;
             resultadoDiv.style.display = 'block';
         }
         
-        // Permite calcular apertando Enter no último campo
+        // Enter no campo de altura
         document.getElementById('altura').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 calcularIMC();
