@@ -7,104 +7,113 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
             margin: 0;
             padding: 20px;
-            color: #333;
+            color: #e2e8f0;
         }
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: #1e2937;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 1px solid #334155;
         }
         h1 {
             text-align: center;
-            color: #2c3e50;
-            margin-bottom: 10px;
+            color: #60a5fa;
+            margin-bottom: 8px;
         }
         .subtitle {
             text-align: center;
-            color: #7f8c8d;
+            color: #94a3b8;
             margin-bottom: 30px;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #34495e;
+            color: #cbd5e1;
         }
-        input {
+        input, select {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
+            padding: 13px;
+            background: #334155;
+            border: 2px solid #475569;
             border-radius: 8px;
             font-size: 16px;
+            color: #e2e8f0;
             box-sizing: border-box;
         }
-        input:focus {
+        input:focus, select:focus {
             outline: none;
-            border-color: #3498db;
-        }
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
+            border-color: #60a5fa;
         }
         button {
             width: 100%;
-            padding: 14px;
-            background: #3498db;
+            padding: 15px;
+            background: #3b82f6;
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
         button:hover {
-            background: #2980b9;
+            background: #2563eb;
+            transform: translateY(-2px);
         }
         #resultado {
             margin-top: 30px;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 12px;
             text-align: center;
-            font-size: 1.3em;
+            font-size: 1.35em;
             display: none;
         }
-        .imc-normal { background: #2ecc71; color: white; }
-        .imc-baixo { background: #f1c40f; color: white; }
-        .imc-alto { background: #e67e22; color: white; }
-        .imc-obeso { background: #e74c3c; color: white; }
-        
+        .imc-normal { background: #22c55e; color: white; }
+        .imc-baixo { background: #eab308; color: white; }
+        .imc-alto { background: #f97316; color: white; }
+        .imc-obeso { background: #ef4444; color: white; }
+
         table {
             width: 100%;
-            margin-top: 30px;
+            margin-top: 35px;
             border-collapse: collapse;
         }
         th, td {
-            padding: 12px;
+            padding: 14px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #475569;
         }
         th {
-            background: #34495e;
+            background: #1e40af;
             color: white;
+        }
+
+        .dicas {
+            margin-top: 40px;
+            background: #334155;
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid #60a5fa;
+        }
+        .dicas h3 {
+            color: #60a5fa;
+            margin-top: 0;
         }
         .nota {
             font-size: 0.9em;
-            color: #7f8c8d;
+            color: #94a3b8;
             margin-top: 30px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -113,7 +122,6 @@
         <h1>Calculadora de IMC</h1>
         <p class="subtitle">Para fins médicos e praticantes de treinamento físico</p>
         
-        <!-- Novos campos -->
         <div class="form-group">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" placeholder="Ex: João Silva" required>
@@ -125,7 +133,7 @@
         </div>
 
         <div class="form-group">
-            <label>Sexo:</label>
+            <label for="sexo">Sexo:</label>
             <select id="sexo" required>
                 <option value="">Selecione</option>
                 <option value="Masculino">Masculino</option>
@@ -134,68 +142,54 @@
             </select>
         </div>
 
-        <!-- Campos originais -->
         <div class="form-group">
             <label for="peso">Peso (kg):</label>
             <input type="number" id="peso" step="0.1" min="20" placeholder="Ex: 75.5" required>
         </div>
         
         <div class="form-group">
-            <label for="altura">Altura (cm):</label>
-            <input type="number" id="altura" step="0.1" min="100" placeholder="Ex: 175" required>
+            <label for="altura">Altura (metros):</label>
+            <input type="number" id="altura" step="0.01" min="1.0" placeholder="Ex: 1.75" required>
         </div>
         
         <button onclick="calcularIMC()">Calcular IMC</button>
         
         <div id="resultado"></div>
-        
-        <!-- Tabela de classificação -->
+
+        <!-- Tabela -->
         <table>
             <thead>
                 <tr>
                     <th>Classificação</th>
                     <th>IMC</th>
-                    <th>Interpretação para Treino/Saúde</th>
+                    <th>Interpretação</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Abaixo do peso</td>
-                    <td>&lt; 18,5</td>
-                    <td>Pode indicar necessidade de ganho de massa muscular.</td>
-                </tr>
-                <tr>
-                    <td>Peso normal</td>
-                    <td>18,5 – 24,9</td>
-                    <td>Faixa ideal para a maioria das pessoas.</td>
-                </tr>
-                <tr>
-                    <td>Sobrepeso</td>
-                    <td>25,0 – 29,9</td>
-                    <td>Atenção à composição corporal (músculo × gordura).</td>
-                </tr>
-                <tr>
-                    <td>Obesidade grau I</td>
-                    <td>30,0 – 34,9</td>
-                    <td>Risco aumentado. Recomenda-se acompanhamento.</td>
-                </tr>
-                <tr>
-                    <td>Obesidade grau II</td>
-                    <td>35,0 – 39,9</td>
-                    <td>Risco alto. Avaliação médica recomendada.</td>
-                </tr>
-                <tr>
-                    <td>Obesidade grau III</td>
-                    <td>≥ 40,0</td>
-                    <td>Risco muito alto. Consulte um profissional.</td>
-                </tr>
+                <tr><td>Abaixo do peso</td><td>&lt; 18,5</td><td>Risco de desnutrição / pouca massa muscular</td></tr>
+                <tr><td>Peso normal</td><td>18,5 – 24,9</td><td>Faixa ideal para saúde geral</td></tr>
+                <tr><td>Sobrepeso</td><td>25,0 – 29,9</td><td>Atenção à composição corporal</td></tr>
+                <tr><td>Obesidade grau I</td><td>30,0 – 34,9</td><td>Risco cardiovascular aumentado</td></tr>
+                <tr><td>Obesidade grau II</td><td>35,0 – 39,9</td><td>Risco alto</td></tr>
+                <tr><td>Obesidade grau III</td><td>≥ 40,0</td><td>Risco muito alto</td></tr>
             </tbody>
         </table>
-        
+
+        <!-- Dicas Médicas e para Treino -->
+        <div class="dicas">
+            <h3>💡 Dicas Médicas e para Quem Treina</h3>
+            <ul>
+                <li><strong>Atletas e praticantes de musculação:</strong> O IMC pode superestimar sua gordura corporal devido ao alto volume muscular. Prefira usar <strong>circunferência abdominal</strong>, <strong>dobras cutâneas</strong> ou <strong>DEXA</strong>.</li>
+                <li><strong>Idosos:</strong> Um IMC ligeiramente acima de 25 pode ser protetor contra osteoporose e fragilidade.</li>
+                <li><strong>Mulheres:</strong> Tendem a ter naturalmente mais gordura corporal que homens. Foque mais na composição do que apenas no número do IMC.</li>
+                <li><strong>Perda de peso:</strong> Priorize déficit calórico moderado (300-500 kcal) + treino de força para preservar músculo.</li>
+                <li><strong>Ganho de massa:</strong> Consuma proteína entre 1,6–2,2g por kg de peso corporal e esteja em superávit calórico.</li>
+                <li><strong>Consulte sempre:</strong> Um nutricionista ou endocrinologista para avaliação completa (bioimpedância, exames hormonais, etc.).</li>
+            </ul>
+        </div>
+
         <div class="nota">
-            <strong>Importante:</strong> O IMC não diferencia massa muscular de gordura corporal. 
-            Atletas e pessoas que treinam força frequentemente apresentam IMC mais alto por causa do músculo. 
-            Use esta ferramenta como referência inicial. Consulte sempre um médico ou nutricionista para avaliação completa.
+            <strong>⚠️ Importante:</strong> Esta calculadora é uma ferramenta de triagem inicial. O IMC não substitui uma avaliação profissional.
         </div>
     </div>
 
@@ -205,16 +199,14 @@
             const idade = parseInt(document.getElementById('idade').value);
             const sexo = document.getElementById('sexo').value;
             const peso = parseFloat(document.getElementById('peso').value);
-            const alturaCm = parseFloat(document.getElementById('altura').value);
+            const altura = parseFloat(document.getElementById('altura').value);
             
-            if (!nome || !idade || !sexo || !peso || !alturaCm || peso <= 0 || alturaCm <= 0) {
+            if (!nome || !idade || !sexo || !peso || !altura || peso <= 0 || altura <= 0) {
                 alert("Por favor, preencha todos os campos corretamente.");
                 return;
             }
             
-            const altura = alturaCm / 100;
             const imc = (peso / (altura * altura)).toFixed(2);
-            
             const resultadoDiv = document.getElementById('resultado');
             
             let classificacao = '';
@@ -245,18 +237,16 @@
                 <p><strong>Idade:</strong> ${idade} anos | <strong>Sexo:</strong> ${sexo}</p>
                 <h2>Seu IMC: <strong>${imc}</strong></h2>
                 <p><strong>Classificação:</strong> ${classificacao}</p>
-                <p><em>Para atletas e praticantes de musculação: lembre-se que o IMC não considera a composição corporal.</em></p>
+                <p><em>O IMC é uma referência. Para resultados precisos, avalie sua composição corporal.</em></p>
             `;
             
             resultadoDiv.className = `imc-resultado ${classeCSS}`;
             resultadoDiv.style.display = 'block';
         }
-        
-        // Enter no campo de altura
+
+        // Enter para calcular
         document.getElementById('altura').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calcularIMC();
-            }
+            if (e.key === 'Enter') calcularIMC();
         });
     </script>
 </body>
